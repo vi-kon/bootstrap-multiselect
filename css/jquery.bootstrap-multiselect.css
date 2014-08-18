@@ -1,0 +1,5 @@
+.bs-ms-wrapper .bs-ms-selected-select .bs-ms-unselected,
+.bs-ms-wrapper .bs-ms-unselected-select .bs-ms-selected,
+.bs-ms-wrapper .bs-ms-filtered {
+    display: none;
+}

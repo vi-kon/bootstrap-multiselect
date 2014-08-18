@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/jquery.bootstrap-multiselect.css"/>
+
+    <script type="text/javascript" src="jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.bootstrap-multiselect.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#test-1').multiselect()
+                    .on('bs.ms.select', function () {
+                            console.log('selected');
+                        })
+                    .on('bs.ms.deselect', function () {
+                            console.log('deselected');
+                        });
+
+            $('#test-2').multiselect();
+        });
+    </script>
+    <title>jQuery Bootstrap Multi Select Demo</title>
+</head>
+<body>
+<div class="container">
+    <hr/>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Label</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Label</label>
+
+            <div class="col-sm-10">
+                <select id="test-1" multiple="multiple">
+                    <option>Select 1</option>
+                    <option selected="selected">Select 2</option>
+                    <option>Select 3</option>
+                    <option>Select 4</option>
+                    <option>Select 5</option>
+                    <option selected="selected">Select 6</option>
+                    <option selected="selected">Select 7</option>
+                    <option>Select 8</option>
+                    <option selected="selected">Select 9</option>
+                    <option>Select 10</option>
+                    <option>Select 11</option>
+                    <option>Select 12</option>
+                    <option>Select 13</option>
+                    <option>Select 14</option>
+                    <option>Select 15</option>
+                    <option>Select 16</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Label</label>
+
+            <div class="col-sm-10">
+                <select id="test-2" multiple="multiple">
+                    <option>Select 1</option>
+                    <option selected="selected">Select 2</option>
+                    <option>Select 3</option>
+                    <option>Select 4</option>
+                    <option>Select 5</option>
+                    <option selected="selected">Select 6</option>
+                    <option selected="selected">Select 7</option>
+                    <option>Select 8</option>
+                    <option selected="selected">Select 9</option>
+                    <option>Select 10</option>
+                    <option>Select 11</option>
+                    <option>Select 12</option>
+                    <option>Select 13</option>
+                    <option>Select 14</option>
+                    <option>Select 15</option>
+                    <option>Select 16</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
