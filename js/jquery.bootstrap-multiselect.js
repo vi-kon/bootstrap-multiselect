@@ -1,6 +1,11 @@
 (function ($, undefined) {
     "use strict";
 
+    /**
+     * @param {string} event supported events: init, addOption
+     * @param {object} options
+     * @returns {*}
+     */
     $.fn.multiselect = function (event, options) {
         var $this, initMethod,
             selectOption, deselectOption, addOption;
@@ -29,6 +34,7 @@
             $rightSelect = $('<select class="form-control" multiple="multiple" size="8"/>')
                 .addClass(options.class.selectedSelected);
 
+            // Declare event handler functions
             events = {
                 leftSearchInputKeyUp : function () {
                     console.log('left');
@@ -78,6 +84,7 @@
                 }
             };
 
+            // Build left select wrapper
             $('<div class="col-sm-5"/>')
                 .append($('<div class="form-group"/>')
                             .append($('<label class="control-label col-sm-4"/>')
@@ -92,6 +99,7 @@
 
             // --------------------------------
 
+            // Build center button section
             $('<div class="col-sm-2"/>')
                 .append($('<a class="btn btn-default btn-block"/>')
                             .html(options.language.btn.selectAll)
@@ -110,6 +118,7 @@
 
             // --------------------------------
 
+            // Build right select wrapper
             $('<div class="col-sm-5"/>')
                 .append($('<div class="form-group"/>')
                             .append($('<label class="control-label col-sm-4"/>')
@@ -124,6 +133,7 @@
 
             // --------------------------------
 
+            // Insert select before original select and hide original
             $select
                 .before($wrapper)
                 .css('display', 'none')
@@ -132,12 +142,22 @@
                     rightSelect: $rightSelect
                 });
 
+            // Add options from select to multiselect
             $select.find('option').each(function () {
-                addOption($select, $(this).html(), $(this).val(), $(this).is(':selected'));
+                addOption($select, {
+                    content : $(this).html(),
+                    value   : $(this).val(),
+                    selected: $(this).is(':selected'),
+                    disabled: $(this).is(':disabled')
+                });
                 $(this).remove();
             });
         };
 
+        /**
+         * @param {jQuery} $select original select's jquery object
+         * @param {int}    index   option position in original select
+         */
         selectOption = function ($select, index) {
             var $leftSelect, $rightSelect;
 
@@ -157,6 +177,10 @@
 
         };
 
+        /**
+         * @param {jQuery} $select original select's jquery object
+         * @param {int}    index   option position in original select
+         */
         deselectOption = function ($select, index) {
             var $leftSelect, $rightSelect;
 
@@ -175,7 +199,15 @@
                 .removeAttr('selected');
         };
 
-        addOption = function ($select, name, value, selected) {
+        /**
+         * @param {jQuery} $select          original select's jquery object
+         * @param {object} options
+         * @param {string} options.content  option content
+         * @param {string} options.value    options value
+         * @param {bool}   options.selected is option selected or not
+         * @param {bool}   options.disabled is option disabled or not
+         */
+        addOption = function ($select, options) {
             var index, $leftSelect, $rightSelect;
 
             if ($select.data('bs-ms') === undefined) {
@@ -188,20 +220,15 @@
 
             $('<option>')
                 .addClass('bs-ms-option-' + index)
-                .attr('value', value)
-                .html(name)
-                .each(function () {
-                          if (selected) {
-                              $(this).attr('selected', 'selected');
-                          }
-                      })
+                .attr('value', options.value)
+                .html(options.content)
+                .attr('selected', options.selected ? 'selected' : undefined)
+                .attr('disabled', options.disabled ? 'disabled' : undefined)
                 .appendTo($select)
                 .clone()
                 .data('option-index', index)
                 .removeAttr('selected')
-                .addClass('bs-ms-' + (selected ?
-                                      '' :
-                                      'un') + 'selected')
+                .addClass('bs-ms-' + (options.selected ? '' : 'un') + 'selected')
                 .appendTo($leftSelect)
                 .clone()
                 .data('option-index', index)
@@ -215,7 +242,7 @@
                 });
             case 'addOption':
                 return $this.each(function () {
-                    addOption($(this), options.name, options.value, options.selected);
+                    addOption($(this), options);
                 });
         }
     };
