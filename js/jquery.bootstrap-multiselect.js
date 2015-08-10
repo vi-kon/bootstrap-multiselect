@@ -9,7 +9,7 @@
 
         if (options === undefined && (event === 'init' || event === undefined || event instanceof Object)) {
             options = event;
-            event = 'init';
+            event   = 'init';
             options = $.extend({}, $.fn.multiselect.defaults, options);
         }
 
@@ -24,13 +24,14 @@
                 .addClass(options.class.wrapper)
                 .addClass('row');
 
-            $leftSelect = $('<select class="form-control" multiple="multiple" size="8"/>')
+            $leftSelect  = $('<select class="form-control" multiple="multiple" size="8"/>')
                 .addClass(options.class.unselectedSelected);
             $rightSelect = $('<select class="form-control" multiple="multiple" size="8"/>')
                 .addClass(options.class.selectedSelected);
 
             events = {
-                leftSearchInputKeyup:  function () {
+                leftSearchInputKeyUp : function () {
+                    console.log('left');
                     var $input = $(this);
                     $leftSelect.find('option').each(function () {
                         if ($input.val().length <= 0 || $(this).html().toLowerCase().indexOf($input.val().toLowerCase()) >= 0) {
@@ -41,6 +42,7 @@
                     });
                 },
                 rightSearchInputKeyUp: function () {
+                    console.log('right');
                     var $input = $(this);
                     $rightSelect.find('option').each(function () {
                         if ($input.val().length <= 0 || $(this).html().toLowerCase().indexOf($input.val().toLowerCase()) >= 0) {
@@ -50,25 +52,25 @@
                         }
                     });
                 },
-                selectBtnClick:        function () {
+                selectBtnClick       : function () {
                     $select.trigger('bs.ms.select');
                     $leftSelect.find(':selected').each(function () {
                         selectOption($select, $(this).data('option-index'));
                     });
                 },
-                selectAllBtnClick:     function () {
+                selectAllBtnClick    : function () {
                     $select.trigger('bs.ms.select.all');
                     $leftSelect.find('.bs-ms-unselected').each(function () {
                         selectOption($select, $(this).data('option-index'));
                     });
                 },
-                deselectBtnClick:      function () {
+                deselectBtnClick     : function () {
                     $select.trigger('bs.ms.deselect');
                     $rightSelect.find(':selected').each(function () {
                         deselectOption($select, $(this).data('option-index'));
                     });
                 },
-                deselectAllBtnClick:   function () {
+                deselectAllBtnClick  : function () {
                     $select.trigger('bs.ms.deselect.all');
                     $rightSelect.find('.bs-ms-selected').each(function () {
                         deselectOption($select, $(this).data('option-index'));
@@ -82,7 +84,7 @@
                                         .html(options.language.unselectedFilter))
                             .append($('<div class="col-sm-8"/>')
                                         .append($('<input type="text" class="form-control"/>')
-                                                    .on('keyup', events.leftSearchInputKeyup()))))
+                                                    .on('keyup', events.leftSearchInputKeyUp))))
                 .append($('<div class="form-group"/>')
                             .append($('<div class="col-sm-12"/>')
                                         .append($leftSelect)))
@@ -126,9 +128,9 @@
                 .before($wrapper)
                 .css('display', 'none')
                 .data('bs-ms', {
-                          leftSelect:  $leftSelect,
-                          rightSelect: $rightSelect
-                      });
+                    leftSelect : $leftSelect,
+                    rightSelect: $rightSelect
+                });
 
             $select.find('option').each(function () {
                 addOption($select, $(this).html(), $(this).val(), $(this).is(':selected'));
@@ -139,7 +141,7 @@
         selectOption = function ($select, index) {
             var $leftSelect, $rightSelect;
 
-            $leftSelect = $select.data('bs-ms').leftSelect;
+            $leftSelect  = $select.data('bs-ms').leftSelect;
             $rightSelect = $select.data('bs-ms').rightSelect;
 
             $leftSelect.find('.bs-ms-option-' + index)
@@ -158,7 +160,7 @@
         deselectOption = function ($select, index) {
             var $leftSelect, $rightSelect;
 
-            $leftSelect = $select.data('bs-ms').leftSelect;
+            $leftSelect  = $select.data('bs-ms').leftSelect;
             $rightSelect = $select.data('bs-ms').rightSelect;
 
             $leftSelect.find('.bs-ms-option-' + index)
@@ -180,9 +182,9 @@
                 initMethod($select);
             }
 
-            $leftSelect = $select.data('bs-ms').leftSelect;
+            $leftSelect  = $select.data('bs-ms').leftSelect;
             $rightSelect = $select.data('bs-ms').rightSelect;
-            index = $leftSelect.find('option').length;
+            index        = $leftSelect.find('option').length;
 
             $('<option>')
                 .addClass('bs-ms-option-' + index)
@@ -221,18 +223,18 @@
     $.fn.multiselect.defaults = {
         language: {
             unselectedFilter: 'Keresés',
-            selectedFilter:   'Keresés',
-            btn:              {
-                select:      '&gt;',
-                selectAll:   '&gt;&gt;',
-                deselect:    '&lt;',
+            selectedFilter  : 'Keresés',
+            btn             : {
+                select     : '&gt;',
+                selectAll  : '&gt;&gt;',
+                deselect   : '&lt;',
                 deselectAll: '&lt;&lt;'
             }
         },
-        class:    {
-            wrapper:            'bs-ms-wrapper',
-            selectedSelected:   'bs-ms-selected-select',
+        class   : {
+            wrapper           : 'bs-ms-wrapper',
+            selectedSelected  : 'bs-ms-selected-select',
             unselectedSelected: 'bs-ms-unselected-select'
         }
     };
-})(jQuery);
+}(jQuery));
